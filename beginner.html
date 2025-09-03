@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>مبتدئ - لعبة الحروف</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <div class="dot">ق</div>
+          <div>
+            <div class="title">مبتدئ</div>
+            <div style="opacity: 0.8">حروف وكلمات</div>
+          </div>
+        </div>
+        <div class="nav">
+          <a class="nav-link" href="index.html">الرئيسية</a
+          ><a class="nav-link" href="intermediate.html">المتوسط</a>
+        </div>
+      </div>
+
+      <div
+        class="game-frame"
+        style="
+          display: flex;
+          gap: 18px;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          height: 400px;
+        "
+      >
+        <!-- مربع الحروف -->
+        <div
+          style="
+            width: 220px;
+            border: 2px solid #dddddd;
+            border-radius: 12px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            text-align: center;
+          "
+          id="lettersBox"
+        >
+          <!-- الحروف هتضاف هنا بالـ JS -->
+        </div>
+
+        <!-- منطقة السؤال في منتصف المساحة -->
+        <div
+          style="
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 20px;
+            "
+          >
+            <div style="font-size: 48px; font-weight: 800" id="b-letter">أ</div>
+            <button id="b-sound" class="audio-btn">🔊 نطق</button>
+          </div>
+          <div
+            id="b-choices"
+            class="choice-grid"
+            style="
+              display: flex;
+              gap: 12px;
+              flex-wrap: wrap;
+              justify-content: center;
+            "
+          ></div>
+          <div style="margin-top: 12px" class="hint">
+            اضغط على الكلمة التي تبدأ بنفس الحرف
+          </div>
+          <div
+            id="feedback"
+            style="
+              margin-top: 12px;
+              font-weight: bold;
+              font-size: 18px;
+              color: green;
+              height: 24px;
+            "
+          ></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 14px; text-align: center" id="bottomBtns">
+        <a class="btn" href="beginner.html">إعادة اللعبة</a>
+        <a class="btn" href="index.html" style="background: #fff; color: #333"
+          >العودة للقائمة</a
+        >
+      </div>
+    </div>
+
+    <script>
+      const letters = [
+        "أ",
+        "ب",
+        "ت",
+        "ث",
+        "ج",
+        "ح",
+        "خ",
+        "د",
+        "ذ",
+        "ر",
+        "ز",
+        "س",
+        "ش",
+        "ص",
+        "ض",
+        "ط",
+        "ظ",
+        "ع",
+        "غ",
+        "ف",
+        "ق",
+        "ك",
+        "ل",
+        "م",
+        "ن",
+        "هـ",
+        "و",
+        "ي",
+      ];
+
+      const beginnerData = [
+        { letter: "أ", choices: ["قلم", "أرنب", "شمس"], answer: "أرنب" },
+        { letter: "ب", choices: ["تفاح", "موز", "بطة"], answer: "بطة" },
+        { letter: "ت", choices: ["مكتب", "تمر", "جمل"], answer: "تمر" },
+        { letter: "ث", choices: ["ثعلب", "شجرة", "سيف"], answer: "ثعلب" },
+        { letter: "ج", choices: ["أرض", "جمل", "باب"], answer: "جمل" },
+        { letter: "ح", choices: ["كتاب", "حصان", "قمر"], answer: "حصان" },
+        { letter: "خ", choices: ["شمس", "بيت", "خروف"], answer: "خروف" },
+        { letter: "د", choices: ["موز", "دب", "فيل"], answer: "دب" },
+        { letter: "ذ", choices: ["جمل", "قلم", "ذئب"], answer: "ذئب" },
+        { letter: "ر", choices: ["مدرسة", "رجل", "سماء"], answer: "رجل" },
+        { letter: "ز", choices: ["بحر", "جبل", "زرافة"], answer: "زرافة" },
+        { letter: "س", choices: ["سفينة", "بيت", "قلم"], answer: "سفينة" },
+        { letter: "ش", choices: ["كتاب", "قلم", "شجرة"], answer: "شجرة" },
+        { letter: "ص", choices: ["تفاح", "صقر", "طاولة"], answer: "صقر" },
+        { letter: "ض", choices: ["حصان", "قلم", "ضفدع"], answer: "ضفدع" },
+        { letter: "ط", choices: ["بيت", "طائرة", "شمس"], answer: "طائرة" },
+        { letter: "ظ", choices: ["كتاب", "ظرف", "قلم"], answer: "ظرف" },
+        { letter: "ع", choices: ["قلم", "باب", "عصفور"], answer: "عصفور" },
+        { letter: "غ", choices: ["غزال", "بيت", "مدرسة"], answer: "غزال" },
+        { letter: "ف", choices: ["قلم", "شجرة", "فيل"], answer: "فيل" },
+        { letter: "ق", choices: ["قلم", "باب", "بيت"], answer: "قلم" },
+        { letter: "ك", choices: ["قمر", "كتاب", "شمس"], answer: "كتاب" },
+        { letter: "ل", choices: ["قلم", "باب", "ليمون"], answer: "ليمون" },
+        { letter: "م", choices: ["شجرة", "موز", "جبل"], answer: "موز" },
+        { letter: "ن", choices: ["نمر", "بيت", "طاولة"], answer: "نمر" },
+        { letter: "هـ", choices: ["باب", "قلم", "هدهد"], answer: "هدهد" },
+        { letter: "و", choices: ["كتاب", "وردة", "قلم"], answer: "وردة" },
+        { letter: "ي", choices: ["يد", "بحر", "شمس"], answer: "يد" },
+      ];
+
+      const lettersBox = document.getElementById("lettersBox");
+      letters.forEach((l) => {
+        const span = document.createElement("div");
+        span.textContent = l;
+        span.style.padding = "10px";
+        span.style.borderRadius = "8px";
+        span.style.background = "orange";
+        span.style.color = "#fff";
+        span.style.fontWeight = "bold";
+        span.style.fontSize = "20px";
+        span.id = "letter-" + l;
+        lettersBox.appendChild(span);
+      });
+
+      let current = 0;
+
+      function speak(text) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "ar-SA";
+        speechSynthesis.speak(u);
+      }
+
+      function loadQuestion() {
+        document.getElementById("feedback").textContent = "";
+        if (current >= beginnerData.length) {
+          document.querySelector(".game-frame").innerHTML =
+            "<div style=' align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;height:100%'><div style='text-align:center;font-size:24px;font-weight:bold'>🎉 تم الانتهاء من المستوى</div><a class='btn' href='intermediate.html' style='margin-top:14px'>الانتقال للمستوى التالي</a></div>";
+
+          return;
+        }
+        const q = beginnerData[current];
+        document.getElementById("b-letter").textContent = q.letter;
+
+        // تحديث ألوان الحروف
+        letters.forEach((l) => {
+          const box = document.getElementById("letter-" + l);
+          if (l === q.letter) {
+            box.style.background = "orange";
+            box.style.color = "#fff";
+          }
+        });
+
+        const choicesDiv = document.getElementById("b-choices");
+        choicesDiv.innerHTML = "";
+        q.choices.forEach((c) => {
+          const btn = document.createElement("button");
+          btn.textContent = c;
+          btn.style.margin = "4px";
+          btn.style.padding = "6px 12px";
+          btn.style.borderRadius = "6px";
+          btn.style.cursor = "pointer";
+          btn.onclick = () => {
+            speak(c); // ينطق الكلمة المختارة
+            if (c === q.answer) {
+              document.getElementById("letter-" + q.letter).style.background =
+                "green";
+              document.getElementById("letter-" + q.letter).style.color =
+                "#fff";
+              document.getElementById("feedback").textContent = "أحسنت! ✅";
+              current++;
+              setTimeout(loadQuestion, 800);
+            } else {
+              btn.style.background = "red";
+              btn.style.color = "#fff";
+            }
+          };
+          choicesDiv.appendChild(btn);
+        });
+      }
+
+      document.getElementById("b-sound").onclick = () => {
+        speak(document.getElementById("b-letter").textContent);
+      };
+
+      document.addEventListener("DOMContentLoaded", loadQuestion);
+    </script>
+  </body>
+</html>

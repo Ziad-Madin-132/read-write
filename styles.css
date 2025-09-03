@@ -1,0 +1,248 @@
+/* styles.css - مشترك بين الصفحات */
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap");
+
+:root {
+  --accent: #2bb673;
+  --accent-dark: #219c5a;
+  --card: #ffffff;
+  --bg: #f4f7fb;
+  --glass: rgba(255, 255, 255, 0.8);
+  --danger: #ff5c5c;
+  --success: #2db34a;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Cairo", sans-serif;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(120deg, #e6f7f0 0%, #eef5ff 100%);
+  direction: rtl;
+}
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo .dot {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+}
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+.nav a {
+  margin-left: 12px;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-weight: 600;
+}
+
+.hero {
+  background: linear-gradient(90deg, #2b9f75, #2b6fa7);
+  color: #fff;
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(43, 159, 117, 0.12);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.hero .left {
+  flex: 1;
+}
+.hero h1 {
+  margin: 0;
+  font-size: 36px;
+}
+.hero p {
+  opacity: 0.95;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 22px;
+}
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(12, 30, 60, 0.06);
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+.card h3 {
+  margin: 0;
+}
+.btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-block;
+}
+.small {
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.game-frame {
+  margin-top: 18px;
+  padding: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.96)
+  );
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
+}
+
+.hint {
+  opacity: 0.85;
+  font-size: 14px;
+}
+.big-btn {
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.audio-btn {
+  border: none;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+  color: white;
+  cursor: pointer;
+}
+
+.correct {
+  background: linear-gradient(90deg, #e8fff1, #e0ffe6);
+  border-left: 4px solid var(--success);
+  padding: 10px;
+  border-radius: 8px;
+}
+.wrong {
+  background: linear-gradient(90deg, #fff0f0, #fff6f6);
+  border-left: 4px solid var(--danger);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* specific game styles */
+.choice-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.choice {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f7fafc;
+  cursor: pointer;
+  text-align: center;
+  min-width: 120px;
+  box-shadow: 0 6px 18px rgba(12, 30, 60, 0.03);
+}
+.choice:hover {
+  transform: translateY(-6px);
+  transition: all 0.18s;
+}
+
+.drag-words {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.word {
+  padding: 10px 14px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(10, 20, 40, 0.04);
+  cursor: grab;
+}
+
+.drop-zone {
+  min-height: 60px;
+  border: 2px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  background: linear-gradient(180deg, #fff, #fbfdff);
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 16px;
+  resize: none;
+}
+.feedback {
+  margin-top: 12px;
+  font-weight: 700;
+}
+
+/* responsive */
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 24px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

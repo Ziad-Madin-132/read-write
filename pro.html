@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>احترافي - الإملاء</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="logo">
+          <div class="dot">ق</div>
+          <div>
+            <div class="title">الاحترافي</div>
+            <div style="opacity: 0.8">إملاء وكتابة</div>
+          </div>
+        </div>
+        <div class="nav">
+          <a class="nav-link" href="index.html">الرئيسية</a
+          ><a class="nav-link" href="advanced.html">المتقدم</a>
+        </div>
+      </div>
+
+      <div class="game-frame">
+        <h3>استمع ثم اكتب الكلمة أو الجملة بدقة</h3>
+        <div
+          style="
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-top: 12px;
+          "
+        >
+          <button id="pro-play" class="audio-btn">🔊 استمع</button>
+          <button id="pro-check" class="btn">تحقق</button>
+        </div>
+
+        <div style="margin-top: 12px">
+          <textarea
+            id="pro-input"
+            rows="3"
+            placeholder="اكتب هنا..."
+          ></textarea>
+          <div id="pro-feedback" class="feedback"></div>
+        </div>
+
+        <div style="margin-top: 12px; color: gray; font-size: 13px">
+          اضغط "استمع" ثم اكتب ما تسمع. سيعطيك النظام تصحيح فوري.
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const proWords = [
+        "المدرسة",
+        "الحديقة الجميلة",
+        "سامي يقرأ كتاب",
+        "الطلاب يدرسون بجد",
+        "الشمس تشرق في الصباح",
+        "أحب القهوة الساخنة",
+        "السماء صافية اليوم",
+        "الطفلة تلعب في الحديقة",
+        "الكتاب مفيد جدا للطلاب",
+        "المدرب يشرح الدرس بوضوح",
+        "الأم تطبخ الطعام لذيذ",
+        "الحيوانات في الحديقة سعيدة",
+        "الطلاب يكتبون الواجبات",
+        "الحديقة تحتوي على أزهار جميلة",
+        "الكتاب يحتوي على معلومات قيمة",
+      ];
+
+      let current = 0;
+
+      function speak(text) {
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "ar-SA";
+        speechSynthesis.speak(u);
+      }
+
+      function proSetup(words) {
+        const input = document.getElementById("pro-input");
+        const feedback = document.getElementById("pro-feedback");
+        const playBtn = document.getElementById("pro-play");
+        const checkBtn = document.getElementById("pro-check");
+
+        function loadWord() {
+          if (current >= words.length) {
+            // رسالة الانتهاء
+            document.querySelector(".game-frame").innerHTML = `
+              <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:300px; text-align:center;">
+                <div style="font-size:20px; font-weight:bold; color:green; line-height:1.5;">
+                  🎉 لقد أتممت التدريب بنجاح مع أكاديمية القراءة والكتابة!<br>
+                  تابع المنصة باستمرار، حيث سيتم الإعلان عن ميتينج خاص بالمستخدمين قريبًا.
+                </div>
+                <a class="btn" href="pro.html" style="margin-top:14px;">إعادة اللعبة</a>
+              </div>`;
+            return;
+          }
+          input.value = "";
+          feedback.textContent = "";
+        }
+
+        playBtn.onclick = () => {
+          if (current < words.length) speak(words[current]);
+        };
+
+        checkBtn.onclick = () => {
+          if (current >= words.length) return;
+          if (input.value.trim() === words[current]) {
+            feedback.textContent = "أحسنت! ✅";
+            feedback.style.color = "green";
+            current++;
+            setTimeout(loadWord, 700);
+          } else {
+            feedback.textContent = "حاول مرة أخرى ❌";
+            feedback.style.color = "red";
+          }
+        };
+
+        loadWord();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => proSetup(proWords));
+    </script>
+  </body>
+</html>
